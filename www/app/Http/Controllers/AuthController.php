@@ -55,14 +55,14 @@ class AuthController extends Controller
             'login' => $request->login,
             'password' => $request->password,
         ])) {
-            return redirect();
+            return redirect('/');
         }
-        return redirect();
+        return redirect('/');
     }
 
     public function logout(): RedirectResponse
     {
         auth()->logout();
-        return redirect();
+        return redirect('/');
     }
 }

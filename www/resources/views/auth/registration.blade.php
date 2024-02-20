@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{route('registration')}}" method="post" style="width: 600px; margin: auto">
+        <form action="{{route('registration')}}" method="post" style="max-width: 600px; margin: auto">
             @csrf
             <div class="mb-3">
                 <label for="inputSurName" class="form-label">Фамилия</label>

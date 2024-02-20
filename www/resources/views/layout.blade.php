@@ -28,7 +28,12 @@
             <a class="nav-link" href="#">Где нас найти?</a>
         </li>
         <li class="nav-item">
-            <a class="btn btn-light" href="{{route('registrationPage')}}">Войти</a>
+            @guest()
+                <a class="btn btn-light" href="{{route('registrationPage')}}">Войти</a>
+            @endguest
+            @auth()
+                <a class="btn btn-light" href="{{route('logout')}}">Выйти</a>
+            @endauth
         </li>
     </ul>
 </header>
