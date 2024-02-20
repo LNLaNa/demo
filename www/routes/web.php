@@ -34,3 +34,8 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('genres', GenreController::class)->except('destroy');
     Route::get('/genres/{genre}/delete',[GenreController::class,'destroy'])->name('genres.destroy');
 });
+
+//Выаолнение команд artisan
+//Route::get('storage', function () {
+//    \Illuminate\Support\Facades\Artisan::call('storage:link');
+//});
