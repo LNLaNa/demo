@@ -14,14 +14,14 @@
 <header>
     <ul class="nav justify-content-center align-items-center">
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">О нас</a>
+            <a class="nav-link" aria-current="page" href="/">О нас</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Афиша</a>
+            <a class="nav-link" href="{{route('performances.index')}}">Афиша</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#"><img src="{{asset('image/logotype.png')}}" class="logo" style="width: 80px;" alt="Логотип"></a>
+            <a class="nav-link" href="/"><img src="{{asset('image/logotype.png')}}" class="logo" style="width: 80px;" alt="Логотип"></a>
         </li>
 
         <li class="nav-item">
@@ -29,17 +29,24 @@
         </li>
         <li class="nav-item">
             @guest()
-                <a class="btn btn-light" href="{{route('registrationPage')}}">Войти</a>
+                <div class="btn-group" role="group">
+                    <a class="btn btn-light" href="{{route('loginPage')}}">Войти</a>
+                    <a class="btn btn-light" href="{{route('registrationPage')}}">Зарегистрироваться</a>
+                </div>
+
             @endguest
             @auth()
-                <a class="btn btn-light" href="{{route('logout')}}">Выйти</a>
+                    <div class="btn-group" role="group">
+                        @if(auth()->user()?->isAdmin == 1)
+                            <a class="btn btn-light" href="{{route('admin')}}">АдминПанель</a>
+                        @endif
+                        <a class="btn btn-light" href="{{route('logout')}}">Выйти</a>
+                    </div>
+
             @endauth
         </li>
     </ul>
 </header>
-{{--<div class="container">--}}
-
-{{--</div>--}}
 
 @yield('content')
 
