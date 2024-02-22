@@ -7,9 +7,9 @@
             <a href="{{route('performances.create')}}">Добавить постановку</a>
         @endif
         <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-            @foreach($performances as $performance)
+
             <div class="card" style="width: 18rem;">
-                <img src="{{\Illuminate\Support\Facades\Storage::url($performance->image)}}" class="card-img-top" alt="...">
+                <img src="{{asset('image/5f8410c42fa84dcaa496db8346e9.jpg')}}" class="card-img-top" alt="...">
 
                     <div class="card-body">
                         <h5 class="card-title">{{$performance->name}}</h5>
@@ -22,7 +22,7 @@
                         @endif
                     </div>
             </div>
-            @endforeach
+
         </div>
     </div>
 
