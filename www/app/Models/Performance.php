@@ -16,4 +16,8 @@ class Performance extends Model
     {
         return $this->belongsToMany(Genre::class, 'genre_performances');
     }
+    public function carts(): BelongsToMany
+    {
+        return $this->belongsToMany(Cart::class,'cart_performances')->withPivot(['count','price','sum']);//->withPivot(['count','price','sum'])
+    }
 }

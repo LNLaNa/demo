@@ -18,6 +18,7 @@
 
         </form>
 
+        @if(count($genres) > 0)
         <h3>Все</h3>
         <table>
             <thead>
@@ -34,6 +35,7 @@
             @endforeach
             </tbody>
         </table>
+        @endif
     </div>
 
 @endsection

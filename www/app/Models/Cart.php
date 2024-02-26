@@ -21,7 +21,7 @@ class Cart extends Model
 
     public function performances(): BelongsToMany
     {
-        return $this->belongsToMany(Performance::class,'cart_performances');//->withPivot(['count','price','sum']);
+        return $this->belongsToMany(Performance::class,'cart_performances')->withPivot(['count','price','sum']);//->withPivot(['count','price','sum']);
     }
 
     public function order(): HasOne //hasMany

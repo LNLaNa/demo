@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cart_id')->constrained();
             $table->foreignId('performance_id')->constrained();
-            $table->string('count')->nullable();
-            $table->string('price')->default('1');
+            $table->string('count')->default('1');
+            $table->string('price')->nullable();
             $table->string('sum')->nullable();
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Genre;
 use App\Models\Performance;
 use Illuminate\Http\RedirectResponse;
@@ -13,7 +14,11 @@ class PerformanceController extends Controller
     public function index(): View
     {
         $performances = Performance::all();
-
+        if (auth()) {
+            $cart = Cart::query()->where('user_id', auth()->user()->id)->orderByDesc('id')->first();
+            return view('performances.index',compact('performances','cart'));
+        }
+        else
         return view('performances.index',compact('performances'));
     }
 

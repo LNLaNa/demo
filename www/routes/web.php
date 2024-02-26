@@ -32,10 +32,11 @@ Route::get('/login', [AuthController::class, 'loginPage'])->name('loginPage');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::resource('performances', PerformanceController::class)->only('index');
+Route::resource('performances', PerformanceController::class)->only('index','show');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/addPerformance/{performance}',[CartController::class, 'addPerformance'])->name('addPerformance');
+    Route::get('/removePerformance/{performance}',[CartController::class, 'removePerformance'])->name('removePerformance');
 });
 
 Route::middleware(['admin'])->group(function () {
@@ -43,7 +44,7 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('genres', GenreController::class)->except('destroy');
     Route::get('/genres/{genre}/delete',[GenreController::class,'destroy'])->name('genres.destroy');
 
-    Route::resource('performances', PerformanceController::class)->except('destroy','index');
+    Route::resource('performances', PerformanceController::class)->except('destroy','index','show');
     Route::get('/performances/{performance}/delete',[PerformanceController::class,'destroy'])->name('performances.destroy');
 });
 

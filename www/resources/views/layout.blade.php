@@ -26,7 +26,7 @@
 
             @endguest
             @auth()
-                    @if(auth()->user()?->isAdmin == 1)
+                    @if(auth()->user()->isAdmin == 1)
                         <a class="navbar-brand" href="/"><img src="{{asset('image/logotype.png')}}" class="logo" style="width: 80px;" alt="Логотип"></a>
                         <a class="navbar-brand" href="/genres">Жанры</a>
                         <a class="navbar-brand" href="/performances">Спектакли</a>
@@ -40,7 +40,7 @@
 {{--                        @if(auth()->user()?->isAdmin == 1)--}}
 {{--                            <a class="btn btn-light" href="{{route('admin')}}">АдминПанель</a>--}}
 {{--                        @endif--}}
-                        @if(auth()->user()?->isAdmin == 0)
+                        @if(auth()->user()->isAdmin == 0)
                             <a class="btn btn-light" href="">Корзина</a>
                         @endif
                         <a class="btn btn-light" href="{{route('logout')}}">Выйти</a>
