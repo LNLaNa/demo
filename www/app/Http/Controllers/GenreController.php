@@ -16,6 +16,9 @@ class GenreController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name'=>'required'
+        ]);
         Genre::query()->create([
             'name' => $request->name,
         ]);
@@ -24,6 +27,7 @@ class GenreController extends Controller
 
     public function destroy(Genre $genre)
     {
+        $genre->performances()->detach();
         $genre->delete();
         return redirect()->back();
     }

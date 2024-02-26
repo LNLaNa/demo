@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,24 +25,26 @@ class AuthController extends Controller
 
     public function registration(Request $request): RedirectResponse
     {
-//        $request->validate([
-//           'name' => 'required',
-//           'surname' => 'required',
-//           'login' => 'required',
-//           'email' => 'required|email',
-//           'password' => 'required',
-//           'rules' => 'required',
-//        ]);
+        $request->validate([
+           'name' => 'required',
+           'surname' => 'required',
+           'login' => 'required',
+           'email' => 'required|email',
+           'password' => 'required',
+        ]);
 //        dd($request->password == $request->passwordTwo);
         $checkPassword = $request->password == $request->passwordTwo;
         if ($checkPassword == true) {
-            User::query()->create([
+            $user = User::query()->create([
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'patronymic' => $request->patronymic??NULL,
                 'login' => $request->login,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+            ]);
+            Cart::query()->create([
+                'user_id' => $user->id
             ]);
             return redirect(route('loginPage'));
         }
@@ -57,7 +60,7 @@ class AuthController extends Controller
         ])) {
             return redirect('/');
         }
-        return redirect('/');
+        return redirect(route('loginPage'));
     }
 
     public function logout(): RedirectResponse

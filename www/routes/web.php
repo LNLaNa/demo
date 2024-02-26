@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\PerformanceController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/contacts', function () {
+    return view('contacts');
+});
+
 
 Route::get('/registration', [AuthController::class, 'registrationPage'])->name('registrationPage');
 Route::post('/registration', [AuthController::class, 'registration'])->name('registration');
@@ -29,9 +34,12 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::resource('performances', PerformanceController::class)->only('index');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/addPerformance/{performance}',[CartController::class, 'addPerformance'])->name('addPerformance');
+});
 
 Route::middleware(['admin'])->group(function () {
-    Route::get('/admin', [AdminController::class,'index'])->name('admin');
+//    Route::get('/admin', [AdminController::class,'index'])->name('admin');
     Route::resource('genres', GenreController::class)->except('destroy');
     Route::get('/genres/{genre}/delete',[GenreController::class,'destroy'])->name('genres.destroy');
 
@@ -39,7 +47,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/performances/{performance}/delete',[PerformanceController::class,'destroy'])->name('performances.destroy');
 });
 
-//Выаолнение команд artisan
+//Выполнение команд artisan - без терминала
 //Route::get('storage', function () {
 //    \Illuminate\Support\Facades\Artisan::call('storage:link');
 //});

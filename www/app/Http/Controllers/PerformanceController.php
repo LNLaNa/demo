@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use App\Models\Performance;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class PerformanceController extends Controller
 
     public function create()
     {
-        return view('performances.create');
+        $genres = Genre::all();
+        return view('performances.create',compact('genres'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -33,26 +35,30 @@ class PerformanceController extends Controller
 
         if ($validate) {
             $image = $request->file('image')->store('public/performances/');
-            Performance::query()->create([
+            $performance = Performance::query()->create([
                 'name' => $request->name,
                 'price' => $request->price,
                 'age_limit' => $request->age_limit,
                 'image' => $image,
                 'date' => $request->date,
             ]);
+
+            $performance->genres()->sync($request->genre);
+
             return redirect(route('performances.index'));
         }
         else return redirect(route('performances.create'));
     }
 
-//    public function show(Performance $performance): View
-//    {
-//        return view('performances.show',compact('performance'));
-//    }
+    public function show(Performance $performance): View
+    {
+        return view('performances.show',compact('performance'));
+    }
 
     public function edit(Performance $performance): View
     {
-        return view('performances.edit',compact('performance'));
+        $genres = Genre::all();
+        return view('performances.edit', compact('performance', 'genres'));
     }
 
     public function update(Request $request, Performance $performance)
@@ -64,6 +70,7 @@ class PerformanceController extends Controller
                 'age_limit' => $request->age_limit,
                 'date' => $request->date,
             ]);
+            $performance->genres()->sync($request->genre);
         } else {
             $image = $request->file('image')->store('public/performances/');
             $performance->update([
@@ -73,6 +80,7 @@ class PerformanceController extends Controller
                 'image' => $image,
                 'date' => $request->date,
             ]);
+            $performance->genres()->sync($request->genre);
         }
         return redirect(route('performances.index'));
 
@@ -80,6 +88,7 @@ class PerformanceController extends Controller
 
     public function destroy(Performance $performance)
     {
+        $performance->genres()->detach();
         $performance->delete();
         return redirect()->back();
     }

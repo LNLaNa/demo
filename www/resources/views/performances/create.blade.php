@@ -8,9 +8,15 @@
             <input type="text" class="form-control" name="name" placeholder="название">
             <input type="number" class="form-control" name="price" placeholder="Цена">
             <input type="number" class="form-control" name="age_limit" placeholder="Возрастное ограничение">
-            <input type="file" class="form-control" name="image" placeholder="Картинка">
+            <input type="file" required class="form-control" name="image" placeholder="Картинка">
+            <select class="form-select" name="genre[]" multiple>
+                @foreach($genres as $genre)
+                    <option value="{{$genre->id}}">{{$genre->name}}</option>
+                @endforeach
+
+            </select>
             <input type="date" class="form-control" name="date" placeholder="Дата">
-            <button class="btn btn-primary">Добавить</button>
+            <button class="btn btn-outline-info m-auto">Добавить</button>
         </form>
     </div>
 @endsection
